@@ -24,10 +24,6 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const brandCollection = client
-      .db("Vogue-Verse-Apparel-store")
-      .collection("brands");
-
     const brandProductCollection = client
       .db("Vogue-Verse-Apparel-store")
       .collection("brandsProduct");
@@ -35,11 +31,6 @@ async function run() {
     const myCartCollection = client
       .db("Vogue-Verse-Apparel-store")
       .collection("myCart");
-
-    app.get("/brands", async (req, res) => {
-      const result = await brandCollection.find().toArray();
-      res.send(result);
-    });
 
     app.get("/brandsProduct", async (req, res) => {
       const result = await brandProductCollection.find().toArray();
@@ -51,16 +42,6 @@ async function run() {
       console.log(name);
       const query = { brandName: name };
       const result = await brandProductCollection.find(query).toArray();
-      res.send(result);
-    });
-
-    app.get("/brandsProduct", async (req, res) => {
-      const result = await brandProductCollection.find().toArray();
-      res.send(result);
-    });
-
-    app.get("/single-product", async (req, res) => {
-      const result = await brandProductCollection.find().toArray();
       res.send(result);
     });
 
@@ -123,7 +104,7 @@ async function run() {
 
     app.get("/addProduct/:id", async (req, res) => {
       const id = req.params.id;
-      console.log(id);
+      // console.log(id);
       const query = { _id: new ObjectId(id) };
       const result = await myCartCollection.find(query).toArray();
       res.send(result);
@@ -131,7 +112,7 @@ async function run() {
 
     app.delete("/addProduct/:id", async (req, res) => {
       const id = req.params.id;
-      console.log(id);
+      // console.log(id);
       const query = { _id: new ObjectId(id) };
       const result = await myCartCollection.deleteOne(query);
       res.send(result);
